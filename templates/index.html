@@ -1,53 +1,105 @@
-{% extends 'base.html' %}
-{% block details %}
-    <div class="container">
-        <form action="/" method="POST"> 
-            <div class="mb-3">
-              <label for="title" class="form-label">Title</label>
-              <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp">
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Description</label>
-              <input type="text" class="form-control" name="desc" id="exampleInputPassword1">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Recommender System</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Book-Recommender</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav w-100 mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/recommend">Recommend</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Dropdown
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2 ms-auto"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
           </form>
-    </div>
-    <div class="container my-4"> 
-      <h1>Your To-Do List</h1>
-        <table class="table">
-            <!-- We want if the table is empty, it is not shown  -->
-              {% if allTodo | length == 0 %}
-                <div class="alert alert-dark" role="alert">
-                  No record found. Add your first To-Do right now!!!
-                </div>
-              {% else %}
-              <thead>
-                <tr>
-                  <th scope="col">S.No.</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Date Created</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for i in allTodo %}
-                <tr>
-                <!-- <th scope="row">{{i.sno}}</th>  Won't work if some record is deleted  -->
-                <th>{{loop.index}}</th> <!-- Will work always -->
-                <td>{{i.title}}</td>
-                <td>{{i.desc}}</td>
-                <td>{{i.date_created}}</td>
-                <td>
-                  <a href="/update/{{i.sno}}" type="button" class="btn btn-success">Update</a>
-                  <a href="/delete/{{i.sno}}" type="button" class="btn btn-danger">Delete</a>
-                </td>
-              </tr>
-                {% endfor %}
-            </tbody>
-            {% endif %}
+        </div>
+      </div>
+    </nav>
 
-          </table>
+    <div class="container">
+      <div class="col-12">
+        <!-- The title of the page -->
+        <h1 class="display-4 row my-5">Top 50 Books</h1>
+      </div>
+
+      <div class="row">
+        {% for i in range(book_name | length) %}
+        <div
+          class="card col-sm-6 mx-2 card border-dark mb-3"
+          style="width: 18rem"
+        >
+          <img src="{{image[i]}}" class="card-img-top" alt="image" />
+          <div class="card-body">
+            <h5 class="card-title text-success"><i>{{book_name[i]}}</i></h5>
+            <h6 class="card-text my-2">Author : {{author[i]}}</h6>
+            <h6 class="card-text">Rating : {{rating[i]}}</h6>
+            <h6 class="card-text">Votes : {{votes[i]}}</h6>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
-{% endblock details %}
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
